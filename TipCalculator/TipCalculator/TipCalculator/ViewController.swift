@@ -25,6 +25,8 @@ class ViewController: UIViewController {
         if let defaultTip = UserDefaults.standard.value(forKey: Constants.DEFAULT_TIP) {
             self.tipsSegmentedCntrl?.selectedSegmentIndex = defaultTip as! Int;
         }
+        
+        self.billAmtTxtField.becomeFirstResponder()
 
     }
     
