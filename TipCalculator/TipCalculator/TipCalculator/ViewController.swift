@@ -31,18 +31,19 @@ class ViewController: UIViewController {
     }
     
     @IBAction func amtChanged(_ sender: Any) {
-        
-        let currencySign = NSLocale.current.currencySymbol ?? "$";
-        
         let tipAmts = [0.15, 0.18, 0.20]
         
-        let bill = (Double(self.billAmtTxtField.text!) ?? 0)
+        let billAmt = self.billAmtTxtField.text?.replacingOccurrences(of: ",", with: "") // Eliminate commas from currency
+        
+        let bill = Double(billAmt!) ?? 0
         
         let tipPercent = tipAmts[self.tipsSegmentedCntrl?.selectedSegmentIndex ?? 0]
         let tip = tipPercent * bill
         
-        self.tipLbl.text = String(format: "%@%.2f", currencySign, tip)
-        self.totalLbl.text = String(format: "%@%.2f", currencySign, tip+bill)
+        let format = NumberFormatter()
+        format.numberStyle = .currency
+        self.tipLbl.text = String(format: "%@", format.string(from:NSNumber(value: tip)) ?? 0)
+        self.totalLbl.text = String(format: "%@", format.string(from:NSNumber(value: tip+bill)) ?? 0)
         
     }
     
